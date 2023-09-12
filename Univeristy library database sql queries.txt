@@ -1,0 +1,95 @@
+
+# Using MariaDB Server &  HeidiSQL to Create the University library database/* Create the EMPLOYEE table */CREATE TABLE EMPLOYEE (	EmpID CHAR (5) NOT NULL,EmpName VARCHAR (100) NOT NULL,EmpAddr VARCHAR (150)  NULL,EmpEmail VARCHAR (50) NOT NULL,			CONSTRAINT EmployeePK	PRIMARY KEY (EmpID)							);/*Insert records into EMPLOYEE*/INSERT INTO EMPLOYEE(EmpID , EmpName , EmpAddr,EmpEmail)	VALUES ('101', 'James Bond', '920 Napoleon Road','jb@cat.edu');INSERT INTO EMPLOYEE(EmpID , EmpName , EmpAddr,EmpEmail)	VALUES ('102', 'Alex Morgan', '922 Lake Dr','am@cat.edu');INSERT INTO EMPLOYEE(EmpID , EmpName , EmpAddr,EmpEmail)	VALUES ('103', 'John Snow', '933 Westwood Dr','js@cat.edu');INSERT INTO EMPLOYEE(EmpID , EmpName , EmpAddr,EmpEmail)	VALUES ('104', 'Gill Jon', '935 Everwood Dr','gj@cat.edu');INSERT INTO EMPLOYEE(EmpID , EmpName , EmpAddr,EmpEmail)	VALUES ('105', 'Beth Jane', '940 South Main Street','bj@cat.edu');
+			
+/* Create the STUDENT table */
+CREATE TABLE STUDENT (	
+
+StudID CHAR (5) NOT NULL,
+StuName VARCHAR (100) NOT NULL,
+StuAddr VARCHAR (150)  NULL,
+StuEmail VARCHAR (50) NOT NULL,
+			
+CONSTRAINT StudentPK	PRIMARY KEY (StudID)						
+);	
+/*Insert records into STUDENT*/
+
+INSERT INTO STUDENT(StudID , StuName, StuAddr,StuEmail)
+	VALUES ('10001', 'Lily Evans', '165 Main Street','le@cat.edu');INSERT INTO STUDENT(StudID , StuName, StuAddr,StuEmail)	VALUES ('10002', 'Dan Ali', '30 Memorial Drive','da@cat.edu');INSERT INTO STUDENT(StudID , StuName, StuAddr,StuEmail)	VALUES ('10003', 'Brian Paul', '700 Oak Street','bp@cat.edu');INSERT INTO STUDENT(StudID , StuName, StuAddr,StuEmail)	VALUES ('10004', 'Mark Donald', '11 Jungle Road','md@cat.edu');INSERT INTO STUDENT(StudID , StuName, StuAddr,StuEmail)	VALUES ('10005', 'Kevin Ronald', '506 State Road','kr@cat.edu');
+	
+/* Create the PUBLISHER table */
+CREATE TABLE PUBLISHER (	
+
+PubID CHAR (5) NOT NULL,
+PubName VARCHAR (100) NOT NULL,
+PubAddr VARCHAR (150)  NULL,
+PubEmail VARCHAR (50) NOT NULL,
+			
+CONSTRAINT PublisherPK	PRIMARY KEY (PubID)							
+);
+/*Insert records into PUBLISHER*/
+INSERT INTO PUBLISHER(PubID , PubName , PubAddr,PubEmail)
+	VALUES ('20001', 'Ryan Jason', '352 Palmer Road','rj@cat.edu');INSERT INTO PUBLISHER(PubID , PubName , PubAddr,PubEmail)	VALUES ('20002', 'Gary Eric', '141 Washington Ave','ge@cat.edu');INSERT INTO PUBLISHER(PubID , PubName , PubAddr,PubEmail)	VALUES ('20003', 'Larry Scott', '279 Troy Road','ls@cat.edu');INSERT INTO PUBLISHER(PubID , PubName , PubAddr,PubEmail)	VALUES ('20004', 'Rachel Debra', '4975 Transit Road','rd@cat.edu');INSERT INTO PUBLISHER(PubID , PubName , PubAddr,PubEmail)	VALUES ('20005', 'Ruth Janet', '161 Berlin Road','rj@cat.edu');
+
+/* Create the AUTHOR table */
+CREATE TABLE AUTHOR (	
+
+AuthID CHAR (5) NOT NULL,
+AuthName VARCHAR (100) NOT NULL,
+AuthAddr VARCHAR (150)  NULL,
+AuthEmail VARCHAR (50) NOT NULL,
+			
+CONSTRAINT AuthPK PRIMARY KEY (AuthID)						
+);/*Insert records into AUTHOR*/
+
+INSERT INTO AUTHOR(AuthID , AuthName , AuthAddr ,AuthEmail )
+	VALUES ('30001', 'Jose Henry', '235 Queen St','jh@cat.edu');
+INSERT INTO AUTHOR(AuthID , AuthName , AuthAddr ,AuthEmail )	VALUES ('30002', 'Nathan Douglas', '164 Danbury Rd','nd@cat.edu');INSERT INTO AUTHOR(AuthID , AuthName , AuthAddr ,AuthEmail )	VALUES ('30003', 'Victoria Olivia', '80 Town Line Rd','vo@cat.edu');INSERT INTO AUTHOR(AuthID , AuthName , AuthAddr ,AuthEmail )	VALUES ('30004', 'Kyle Walter', '970 Torringford Street','kw@cat.edu');INSERT INTO AUTHOR(AuthID , AuthName , AuthAddr ,AuthEmail )	VALUES ('30005', 'Jeremy Ethan', '844 No Colony Road','je@cat.edu');
+/* Create the BOOK table */
+CREATE TABLE BOOK (	
+BookID CHAR (5) NOT NULL,
+BookName VARCHAR (100) NOT NULL,
+BookPages INT  NOT NULL,
+ISBNNum VARCHAR (50) NOT NULL,
+StudID CHAR (5)  NULL,
+EmpID CHAR (5)  NULL,
+PubID CHAR (5) NOT NULL,
+			
+CONSTRAINT BookPK   PRIMARY KEY (BookID),
+
+CONSTRAINT BookFK1  FOREIGN KEY (StudID) REFERENCES STUDENT (StudID)
+								ON UPDATE CASCADE
+								ON DELETE NO ACTION	
+,
+CONSTRAINT BookFK2  FOREIGN KEY (EmpID) REFERENCES EMPLOYEE (EmpID)
+								ON UPDATE CASCADE
+								ON DELETE NO ACTION
+,								
+CONSTRAINT BookFK3  FOREIGN KEY (PubID) REFERENCES PUBLISHER (PubID)
+								ON UPDATE CASCADE
+								ON DELETE NO ACTION							
+);
+/*Insert records into BOOK*/
+INSERT INTO BOOK(BookID , BookName ,BookPages,ISBNNum, StudID ,EmpID,PubID )
+	VALUES ('40001', 'The Bell Jar', '110','817525766-0','10001','101','20001');
+INSERT INTO BOOK(BookID , BookName ,BookPages,ISBNNum, StudID ,EmpID,PubID )	VALUES ('40002', 'Calvin', '230','716578901-4','10002','102','20002');INSERT INTO BOOK(BookID , BookName ,BookPages,ISBNNum, StudID ,EmpID,PubID )	VALUES ('40003', 'Displacement', '360','998456723-4','10003','103','20003');INSERT INTO BOOK(BookID , BookName ,BookPages,ISBNNum, StudID ,EmpID,PubID )	VALUES ('40004', 'Edinburgh', '500','654732187-5','10004','104','20004');INSERT INTO BOOK(BookID , BookName ,BookPages,ISBNNum, StudID ,EmpID,PubID )	VALUES ('40005', 'The Fifth Risk', '650','756489762-1','10005','105','20005');
+
+/* Create the BOOK_AUTH table */
+CREATE TABLE BOOK_AUTH (	
+BookAuthID CHAR (5) NOT NULL,
+BookID CHAR (5) NOT NULL,
+AuthID CHAR (5) NOT NULL,
+			
+CONSTRAINT BookAuthPK	PRIMARY KEY (BookAuthID),
+
+CONSTRAINT BookAuthFK1	FOREIGN KEY (BookID) REFERENCES BOOK (BookID)
+								ON UPDATE CASCADE
+								ON DELETE NO ACTION	
+,
+CONSTRAINT BooAuthkFK2	FOREIGN KEY (AuthID) REFERENCES AUTHOR (AuthID)
+								ON UPDATE CASCADE
+								ON DELETE NO ACTION
+					
+);/*Insert records into BOOK_AUTH*/
+
+INSERT INTO BOOK_AUTH (BookAuthID  ,BookID, AuthID  )
+	VALUES ('50001', '40001','30001');INSERT INTO BOOK_AUTH (BookAuthID  ,BookID, AuthID  )	VALUES ('50002', '40002','30002');INSERT INTO BOOK_AUTH (BookAuthID  ,BookID, AuthID  )	VALUES ('50003', '40003','30003');INSERT INTO BOOK_AUTH (BookAuthID  ,BookID, AuthID  )	VALUES ('50004', '40004','30004');INSERT INTO BOOK_AUTH (BookAuthID  ,BookID, AuthID  )	VALUES ('50005', '40005','30005');
