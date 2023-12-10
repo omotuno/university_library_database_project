@@ -3,6 +3,7 @@
 This project designs and implements a relational database for a university library system to track books, authors, publishers, students, and employees.
 
 The database schema consists of the following tables:
+<img width="806" alt="Screenshot 2023-12-10 at 4 51 21 PM" src="https://github.com/omotuno/university_library_database_project/assets/65866718/05509371-3eaa-4ca1-9442-911a0a3aa8eb">
 
 BOOK - Contains book ID, name, page count, ISBN, and foreign keys
 
